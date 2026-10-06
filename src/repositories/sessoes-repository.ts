@@ -1,4 +1,12 @@
-function createSessoesRepository(sessoes = []) {
+import type {
+  ConsultarGradeSessoesFiltros,
+  Sessao,
+  SessoesRepository,
+} from '../modules/grade-sessoes/types';
+
+export function createSessoesRepository(
+  sessoes: readonly Sessao[] = [],
+): SessoesRepository {
   return {
     consultarGrade({ eventoId, data, horario, sala }) {
       const salaNormalizada = sala?.trim().toLocaleLowerCase('pt-BR');
@@ -35,5 +43,3 @@ function createSessoesRepository(sessoes = []) {
     },
   };
 }
-
-module.exports = { createSessoesRepository };

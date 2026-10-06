@@ -1,8 +1,10 @@
-const assert = require('node:assert/strict');
-const { after, before, test } = require('node:test');
-const { createServer } = require('../src/server');
+import assert from 'node:assert/strict';
+import { after, before, test } from 'node:test';
+import type { AddressInfo } from 'node:net';
+import { createServer } from '../src/server';
+import type { Sessao } from '../src/modules/grade-sessoes/types';
 
-const sessoes = [
+const sessoes: Sessao[] = [
   {
     id: 'sessao-1',
     eventoId: 'evento-1',
@@ -38,17 +40,17 @@ const sessoes = [
   },
 ];
 
-let server;
-let baseUrl;
+const server = createServer({ sessoes });
+let baseUrl: string;
 
 before(async () => {
-  server = createServer({ sessoes });
-  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  baseUrl = `http://127.0.0.1:${server.address().port}`;
+  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const address = server.address() as AddressInfo;
+  baseUrl = `http://127.0.0.1:${address.port}`;
 });
 
 after(async () => {
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     server.close((error) => (error ? reject(error) : resolve()));
   });
 });

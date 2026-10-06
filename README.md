@@ -1,9 +1,9 @@
 # TotalEventos
 Trabalho final disciplina DSC -  alunos Emmanuelly, Fernando e Luiz Henrique
 
-## API Node.js
+## API Node.js com TypeScript
 
-Projeto inicial da API do TotalEventos, usando o servidor HTTP nativo do Node.js.
+API do TotalEventos em TypeScript, usando o servidor HTTP nativo do Node.js.
 
 ### Requisitos
 
@@ -13,6 +13,7 @@ Projeto inicial da API do TotalEventos, usando o servidor HTTP nativo do Node.js
 ### Executar
 
 ```bash
+npm install
 npm start
 ```
 
@@ -41,5 +42,6 @@ O código está organizado em `src/common` (utilidades compartilhadas),
 
 ```bash
 npm run dev
+npm run build
 npm test
 ```

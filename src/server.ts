@@ -1,21 +1,31 @@
-const http = require('node:http');
-const { isDataValida, isHorarioValido, sendBadRequest, sendJson } = require('./common/http');
-const { HttpStatus } = require('./enum/http-status');
-const { createConsultarGradeSessoes } = require('./modules/grade-sessoes/consultar-grade-sessoes');
-const { createSessoesRepository } = require('./repositories/sessoes-repository');
+import { createServer as createHttpServer } from 'node:http';
+import {
+  isDataValida,
+  isHorarioValido,
+  sendBadRequest,
+  sendJson,
+} from './common/http';
+import { HttpStatus } from './enum/http-status';
+import { createConsultarGradeSessoes } from './modules/grade-sessoes/consultar-grade-sessoes';
+import type { Sessao } from './modules/grade-sessoes/types';
+import { createSessoesRepository } from './repositories/sessoes-repository';
 
-function createServer({ sessoes = [] } = {}) {
+interface CreateServerOptions {
+  sessoes?: readonly Sessao[];
+}
+
+export function createServer({ sessoes = [] }: CreateServerOptions = {}) {
   const consultarGradeSessoes = createConsultarGradeSessoes(
     createSessoesRepository(sessoes),
   );
 
-  return http.createServer((request, response) => {
+  return createHttpServer((request, response) => {
     if (request.method === 'GET' && request.url === '/health') {
       sendJson(response, HttpStatus.OK, { status: 'ok', name: 'TotalEventos' });
       return;
     }
 
-    const url = new URL(request.url, 'http://localhost');
+    const url = new URL(request.url ?? '/', 'http://localhost');
     const rotaGrade = url.pathname.match(/^\/eventos\/([^/]+)\/sessoes$/);
 
     if (request.method === 'GET' && rotaGrade) {
@@ -54,5 +64,3 @@ if (require.main === module) {
     console.log(`TotalEventos disponível em http://localhost:${port}`);
   });
 }
-
-module.exports = { createServer };

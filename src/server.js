@@ -1,11 +1,17 @@
 const http = require('node:http');
-const { consultarGradeSessoes } = require('./use-cases/consultar-grade-sessoes');
+const { isDataValida, isHorarioValido, sendBadRequest, sendJson } = require('./common/http');
+const { HttpStatus } = require('./enum/http-status');
+const { createConsultarGradeSessoes } = require('./modules/grade-sessoes/consultar-grade-sessoes');
+const { createSessoesRepository } = require('./repositories/sessoes-repository');
 
 function createServer({ sessoes = [] } = {}) {
+  const consultarGradeSessoes = createConsultarGradeSessoes(
+    createSessoesRepository(sessoes),
+  );
+
   return http.createServer((request, response) => {
     if (request.method === 'GET' && request.url === '/health') {
-      response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-      response.end(JSON.stringify({ status: 'ok', name: 'TotalEventos' }));
+      sendJson(response, HttpStatus.OK, { status: 'ok', name: 'TotalEventos' });
       return;
     }
 
@@ -19,48 +25,25 @@ function createServer({ sessoes = [] } = {}) {
 
       if (
         (data && !isDataValida(data)) ||
-        (horario && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(horario)) ||
+        (horario && !isHorarioValido(horario)) ||
         (sala !== undefined && !sala.trim())
       ) {
-        response.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-        response.end(JSON.stringify({ error: 'Filtros inválidos' }));
+        sendBadRequest(response, 'Filtros inválidos');
         return;
       }
 
-      const eventoId = rotaGrade[1];
-      const resultado = consultarGradeSessoes({
-        eventoId,
-        sessoes,
+      const body = consultarGradeSessoes({
+        eventoId: rotaGrade[1],
         data,
         horario,
         sala,
       });
-
-      response.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-      response.end(
-        JSON.stringify({
-          eventoId,
-          sessoes: resultado,
-          ...(resultado.length === 0 && {
-            mensagem: 'A programação ainda não foi disponibilizada.',
-          }),
-        }),
-      );
+      sendJson(response, HttpStatus.OK, body);
       return;
     }
 
-    response.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
-    response.end(JSON.stringify({ error: 'Rota não encontrada' }));
+    sendJson(response, HttpStatus.NOT_FOUND, { error: 'Rota não encontrada' });
   });
-}
-
-function isDataValida(data) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) {
-    return false;
-  }
-
-  const parsed = new Date(`${data}T00:00:00.000Z`);
-  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(data);
 }
 
 if (require.main === module) {

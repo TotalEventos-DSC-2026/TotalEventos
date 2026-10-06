@@ -33,6 +33,10 @@ vazia e informa que a programação ainda não foi disponibilizada. As sessões 
 recebidas em memória ao criar o servidor; persistência de eventos ainda não está
 configurada.
 
+O código está organizado em `src/common` (utilidades compartilhadas),
+`src/repositories` (acesso aos dados), `src/enum` (constantes enumeradas) e
+`src/modules` (casos de uso organizados por módulo).
+
 ### Desenvolvimento e testes
 
 ```bash

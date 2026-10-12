@@ -1,44 +1,37 @@
 # TotalEventos
-Trabalho final disciplina DSC -  alunos Emmanuelly, Fernando e Luiz Henrique
 
-## API Node.js com TypeScript
+API do projeto TotalEventos em TypeScript com NestJS e SQLite.
 
-API do TotalEventos em TypeScript, usando o servidor HTTP nativo do Node.js.
+## Requisitos e execução
 
-### Requisitos
-
-- Node.js 18 ou superior
+- Node.js 20 ou superior
 - npm
-
-### Executar
 
 ```bash
 npm install
 npm start
 ```
 
-Por padrão, a API fica disponível em `http://localhost:3000`. Para usar outra porta,
-defina a variável de ambiente `PORT`.
+Por padrão, a API fica disponível em `http://localhost:3000`. Configure `PORT`
+para usar outra porta. O banco fica em `data/totaleventos.sqlite`; configure
+`DATABASE_PATH` para escolher outro arquivo.
 
-### Rotas disponíveis
+## Endpoints
 
-- `GET /health` — verifica se a API está funcionando.
-- `GET /eventos/:eventoId/sessoes` — consulta a grade publicada do evento.
-  Aceita os filtros opcionais `data` (`AAAA-MM-DD`), `horario` (`HH:mm`) e `sala`.
-- Qualquer outra rota retorna `404`.
+- `GET /health` — estado da API.
+- `GET /eventos/:eventoId/sessoes` — grade publicada, com filtros opcionais
+  `data` (`AAAA-MM-DD`), `horario` (`HH:mm`) e `sala`.
+- `POST /acessos/check-in` — recebe `{ "codigoQr": "..." }` para registrar
+  entrada. A gravação do ingresso e da lotação é feita em uma transação SQLite.
+- `POST /inscricoes/:id/check-in` — registra o check-in de inscrição confirmada.
 
-O caso de uso `ConsultarGradeSessoes` exibe somente sessões publicadas e ativas.
-O horário informado deve estar dentro do intervalo da sessão (início incluído e
-fim excluído). Quando não há sessões correspondentes, a API retorna uma lista
-vazia e informa que a programação ainda não foi disponibilizada. As sessões são
-recebidas em memória ao criar o servidor; persistência de eventos ainda não está
-configurada.
+Ingressos, inscrições e sessões de lotação são persistidos em SQLite. O QR Code
+é único, e o check-in de acesso atualiza ingresso e lotação atomicamente. Este
+projeto ainda não inclui endpoints administrativos para cadastrar eventos,
+ingressos, inscrições ou sessões; esses registros devem ser carregados por uma
+rotina administrativa ou inseridos no banco.
 
-O código está organizado em `src/common` (utilidades compartilhadas),
-`src/repositories` (acesso aos dados), `src/enum` (constantes enumeradas) e
-`src/modules` (casos de uso organizados por módulo).
-
-### Desenvolvimento e testes
+## Desenvolvimento e testes
 
 ```bash
 npm run dev

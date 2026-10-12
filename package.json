@@ -8,10 +8,10 @@
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node dist/src/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "npm run build && node --test dist/test/server.test.js dist/test/check-in.test.js"
+    "test": "npm run build && node --test dist/test/*.test.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "devDependencies": {
     "@nestjs/testing": "^12.1.3",
@@ -22,6 +22,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "better-sqlite3": "^12.2.0",
     "@nestjs/common": "^12.1.3",
     "@nestjs/core": "^12.1.3",
     "@nestjs/platform-express": "^12.1.3",

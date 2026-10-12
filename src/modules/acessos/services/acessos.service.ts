@@ -1,4 +1,5 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Optional } from '@nestjs/common';
+import { SqliteDatabase } from '../../../database/sqlite-database';
 import {
   INGRESSOS_REPOSITORY,
   type IngressosRepository,
@@ -18,9 +19,15 @@ export class AcessosService {
     private readonly ingressosRepository: IngressosRepository,
     @Inject(SESSOES_LOTACAO_REPOSITORY)
     private readonly sessoesLotacaoRepository: SessoesLotacaoRepository,
+    @Optional() private readonly database?: SqliteDatabase,
   ) {}
 
   async realizarCheckIn(codigoQr: string): Promise<RealizarCheckInResponseDto> {
+    const executar = () => this.realizarCheckInInterno(codigoQr);
+    return this.database ? this.database.runAtomically(executar) : executar();
+  }
+
+  private async realizarCheckInInterno(codigoQr: string): Promise<RealizarCheckInResponseDto> {
     if (typeof codigoQr !== 'string' || !codigoQr.trim()) {
       throw new BadRequestException('O código QR é obrigatório.');
     }

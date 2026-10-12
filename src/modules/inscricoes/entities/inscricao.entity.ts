@@ -1,5 +1,7 @@
 
 import { InscricaoStatus } from '../../../common/enums/inscricao-status.enum';
+import { InscricaoJaRealizadaException } from '../../../common/exceptions/inscricao-ja-realizada.exception';
+import { InscricaoNaoConfirmadaException } from '../../../common/exceptions/inscricao-nao-confirmada.exception';
 
 export class Inscricao {
   private status: InscricaoStatus;
@@ -21,12 +23,10 @@ export class Inscricao {
 
   realizarCheckIn(): void {
     if (this.status === InscricaoStatus.CHECK_IN_REALIZADO) {
-      // A falha será tratada na etapa de exceções semânticas
-      return;
+      throw new InscricaoJaRealizadaException(this.inscricaoId);
     }
     if (this.status !== InscricaoStatus.CONFIRMADA) {
-      // Regra: só é possível fazer check-in se a inscrição estiver confirmada
-      return;
+      throw new InscricaoNaoConfirmadaException(this.inscricaoId);
     }
 
     this.status = InscricaoStatus.CHECK_IN_REALIZADO;

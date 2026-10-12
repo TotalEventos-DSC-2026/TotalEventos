@@ -1,5 +1,7 @@
 // src/modules/acessos/entities/ingresso.entity.ts
 import { IngressoStatus } from '../../../common/enums/ingresso-status.enum.js';
+import { IngressoJaUtilizadoException } from '../../../common/exceptions/ingresso-ja-utilizado.exception.js';
+import { IngressoNaoDisponivelException } from '../../../common/exceptions/ingresso-nao-disponivel.exception.js';
 
 export class Ingresso {
   private status: IngressoStatus;
@@ -20,14 +22,17 @@ export class Ingresso {
     return this.status;
   }
 
-  marcarComoUtilizado(): void {
+  validarCheckIn(): void {
     if (this.status === IngressoStatus.UTILIZADO) {
-      return; // A exceção semântica tratará a comunicação da falha
+      throw new IngressoJaUtilizadoException(this.ingressoId);
     }
     if (this.status !== IngressoStatus.EMITIDO) {
-      return;
+      throw new IngressoNaoDisponivelException(this.ingressoId);
     }
+  }
 
+  marcarComoUtilizado(): void {
+    this.validarCheckIn();
     this.status = IngressoStatus.UTILIZADO;
     this.updatedAt = new Date();
   }

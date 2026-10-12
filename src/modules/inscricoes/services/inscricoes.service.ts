@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InscricoesRepository, INSCRICOES_REPOSITORY } from '../repositories/inscricoes.repository.interface';
 import { RealizarCheckInResponseDto } from '../dto/realizar-check-in-response.dto';
-import { InscricaoNotFoundException } from '../../common/exceptions/inscricao-not-found.exception';
+import { InscricaoNaoEncontradoException } from '../../../common/exceptions/inscricao-nao-encontrado.exception';
 
 @Injectable()
 export class InscricoesService {
@@ -11,10 +11,14 @@ export class InscricoesService {
   ) {}
 
   async realizarCheckIn(inscricaoId: string): Promise<RealizarCheckInResponseDto> {
+    if (!inscricaoId?.trim()) {
+      throw new BadRequestException('O identificador da inscrição é obrigatório.');
+    }
+
     const inscricao = await this.inscricoesRepository.findById(inscricaoId);
     
     if (!inscricao) {
-      throw new InscricaoNotFoundException(inscricaoId);
+      throw new InscricaoNaoEncontradoException(inscricaoId);
     }
 
     inscricao.realizarCheckIn();

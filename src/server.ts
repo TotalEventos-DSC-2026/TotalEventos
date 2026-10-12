@@ -1,4 +1,6 @@
 import { createServer as createHttpServer } from 'node:http';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
 import {
   isDataValida,
   isHorarioValido,
@@ -58,9 +60,14 @@ export function createServer({ sessoes = [] }: CreateServerOptions = {}) {
 
 if (require.main === module) {
   const port = Number(process.env.PORT) || 3000;
-  const server = createServer();
 
-  server.listen(port, () => {
-    console.log(`TotalEventos disponível em http://localhost:${port}`);
-  });
+  void NestFactory.create(AppModule)
+    .then((app) => app.listen(port))
+    .then(() => {
+      console.log(`TotalEventos disponível em http://localhost:${port}`);
+    })
+    .catch((error: unknown) => {
+      console.error('Falha ao iniciar o servidor TotalEventos.', error);
+      process.exitCode = 1;
+    });
 }

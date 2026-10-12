@@ -1,6 +1,7 @@
-export class InscricaoJaRealizadaException extends Error {
+import { ConflictException } from '@nestjs/common';
+
+export class InscricaoJaRealizadaException extends ConflictException {
   constructor(inscricaoId: string) {
     super(`A inscrição "${inscricaoId}" já teve o check-in realizado.`);
-    this.name = 'InscricaoJaRealizadaException';
   }
 }

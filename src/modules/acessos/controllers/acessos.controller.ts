@@ -1,6 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { AcessosService } from '../services/acessos.service.js';
-import { RealizarCheckInResponseDto } from '../dto/realizar-check-in-response.dto.js';
+import { AcessosService } from '../services/acessos.service';
+import { RealizarCheckInResponseDto } from '../dto/realizar-check-in-response.dto';
 
 @Controller('acessos')
 export class AcessosController {

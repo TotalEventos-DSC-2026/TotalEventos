@@ -241,7 +241,7 @@ test('ingresso já utilizado não incrementa ocupação nem é persistido', asyn
   assert.equal(saveCalls, 0);
 });
 
-test('ingresso cancelado não pode ser utilizado', async () => {
+test('ingresso canceladNo não pode ser utilizado', async () => {
   const ingresso = new Ingresso(
     'ing-1',
     'part-1',

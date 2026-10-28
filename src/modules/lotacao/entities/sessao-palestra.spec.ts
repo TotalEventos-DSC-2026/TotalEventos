@@ -1,24 +1,28 @@
-import { SessaoPalestra } from './sessao-palestra.entity.js';
-import { SobrepopulacaoDetectadaException } from '../../../common/exceptions/sobrepopulacao-detectada.exception.js';
+// src/modules/lotacao/entities/sessao-palestra.spec.ts
+import { SessaoPalestra } from './sessao-palestra.entity';
+import { SobrepopulacaoDetectadaException } from '../../../common/exceptions/sobrepopulacao-detectada.exception';
 
-describe('SessaoPalestra - Invariante de Lotação (RN02)', () => {
-  it('deve permitir registrar o check-in presencial quando a ocupação estiver abaixo da capacidade máxima', () => {
-    // Sessão com capacidade máxima de 10 e ocupação atual de 5
-    const sessao = new SessaoPalestra('sessao-uuid-1', 10, 5, new Date());
+describe('SessaoPalestra (Entidade - Regras de Lotação e RN02)', () => {
+  it('deve permitir registrar um check-in presencial quando houver vagas disponíveis', () => {
+    // Arrange: Sessão com capacidade 10 e ocupação 5
+    const sessao = new SessaoPalestra('sessao-1', 10, 5, new Date());
 
+    // Act
     sessao.registrarCheckInPresencial();
 
+    // Assert
     expect(sessao.getOcupacaoAtual()).toBe(6);
   });
 
-  it('deve bloquear o acesso e lançar SobrepopulacaoDetectadaException quando atingir o limite físico da sala', () => {
-    // Sessão com capacidade máxima de 2 e ocupação atual já em 2 (lotação esgotada)[cite: 29]
-    const sessao = new SessaoPalestra('sessao-uuid-1', 2, 2, new Date());
+  it('deve lançar SobrepopulacaoDetectadaException ao tentar registrar check-in com a lotação esgotada (RN02)', () => {
+    // Arrange: Sessão com capacidade 2 e ocupação máxima atingida (2)
+    const sessao = new SessaoPalestra('sessao-2', 2, 2, new Date());
 
-    expect(() => {
-      sessao.registrarCheckInPresencial();
-    }).toThrow(SobrepopulacaoDetectadaException);
-
-    expect(sessao.getOcupacaoAtual()).toBe(2);
+    // Act & Assert
+    expect(() => sessao.registrarCheckInPresencial()).toThrow(
+      SobrepopulacaoDetectadaException,
+    );
+    expect(sessao.getOcupacaoAtual()).toBe(2); // Mantém integridade
   });
+
 });

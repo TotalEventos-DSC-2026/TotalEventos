@@ -17,7 +17,7 @@ controle de lotação e testes unitários e de integração.
 
 ## Requisitos
 
-- Node.js 20 ou superior
+- Node.js 22 ou superior
 - npm
 
 ## Instalação e execução

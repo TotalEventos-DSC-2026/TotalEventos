@@ -23,6 +23,6 @@ after(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-test('UC08 payment approval confirms an inscription only after gateway approval', {
-  skip: 'Blocked: a deterministic approved response requires a safe gateway simulator contract that has not been agreed.',
+test('UC08 confirms a pending inscription only after an explicitly configured local approval', {
+  skip: 'Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. A fake approval must be configured explicitly per scenario, never supplied by a request or sent to a live gateway.',
 }, async () => {});

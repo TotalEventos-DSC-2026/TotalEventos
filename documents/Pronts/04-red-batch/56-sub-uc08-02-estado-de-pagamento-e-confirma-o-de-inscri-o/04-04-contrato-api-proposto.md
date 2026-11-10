@@ -1,5 +1,7 @@
-## REST/payment contract — team review pending
+## Contrato de pagamento proposto — pendente de validação da equipe
 
-POST /inscricoes/:id/pagamentos with no client-supplied result; gateway approval → 201 and inscription status CONFIRMADA only after approval. Response/payment fields remain pending review.
-
-Gateway abstraction/status semantics are proposals only. No user-controlled outcome field is sent. No production code changed.
+- `POST /inscricoes/:id/pagamentos`; o request não fornece resultado.
+- Fake gateway somente em testes, com resposta aprovada explicitamente configurada neste cenário.
+- Aprovação → HTTP 201 e `CONFIRMADA` somente após aprovação são propostas pendentes de validação.
+- Campos de resposta/pagamento e preparação da inscrição seguem pendentes de acordo da equipe.
+- Não existe endpoint/provider no `AppModule`; o teste de confirmação permanece bloqueado.

@@ -1,13 +1,11 @@
-## Build e execução
+## Build and test run
 
+npm run build: succeeded.
 
-pm run build: sucesso.
+Command: node --test dist/test/uc08-payment-red.test.js; exit code 0. Exact test-runner output:
 
-Comando: 
-ode --test dist/test/uc08-payment-red.test.js (exit code 0; cenário skipped/blocked). Saída exata:
-
-``text
-﹣ UC08 payment outcome cannot be tested until a safe gateway simulator contract is approved (643.8397ms) # Blocked: no gateway abstraction or approved test-double contract; never accept outcome from request input.
+```text
+﹣ UC08 payment outcome cannot be tested until a safe gateway simulator contract is approved (302.8985ms) # Blocked: no gateway abstraction or approved test-double contract; never accept outcome from request input.
 ℹ tests 1
 ℹ suites 0
 ℹ pass 0
@@ -15,6 +13,7 @@ ode --test dist/test/uc08-payment-red.test.js (exit code 0; cenário skipped/blo
 ℹ cancelled 0
 ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 2335.8219
-``n
-O teste não alcançou regra de negócio; skip é intencional, não sucesso de comportamento.
+ℹ duration_ms 1231.0605
+```
+
+Interpretation: the one scenario was explicitly skipped/blocked; no payment behavior was reached. This is not a RED assertion failure.

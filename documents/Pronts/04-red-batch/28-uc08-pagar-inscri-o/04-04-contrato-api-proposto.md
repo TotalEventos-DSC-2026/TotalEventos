@@ -1,6 +1,6 @@
-## Contrato REST e gateway propostos — revisão pendente
+## Proposed REST/payment contract — pending team review
 
-- POST /inscricoes/:id/pagamentos, sem outcome definido pelo request; payload vazio ou ausência de body (pendente de decisão da equipe).
-- Gateway abstrato retorna estado de domínio APROVADO, RECUSADO ou FALHA; PENDENTE durante processamento.
-- Aprovação → HTTP 201; recusa → HTTP 402. Falhas e compensação devem preservar consistência (status HTTP a acordar).
-- Não existe gateway/simulador seguro aprovado neste branch. O teste permanece bloqueado e não presume qualquer resultado.
+- POST /inscricoes/:id/pagamentos, with no client-controlled outcome; empty body or no body remains a team decision.
+- Proposed gateway port returns PENDENTE, APROVADO, RECUSADO, or FALHA.
+- Approved -> HTTP 201; declined -> HTTP 402.
+- No gateway abstraction or approved deterministic test double exists in this branch. The test stays blocked rather than inventing the simulated result.

@@ -1,3 +1,3 @@
-## Escopo RED — Issue #28
+## RED scope — Issue #28
 
-Critério selecionado: confirmar inscrição paga somente após aprovação segura do gateway. A execução fica bloqueada até haver contrato de test-double; não simular aprovação/recusa via payload do cliente.
+Selected criterion: confirm a paid inscription only after gateway approval. **Blocked** until the team approves a safe deterministic gateway test-double contract.

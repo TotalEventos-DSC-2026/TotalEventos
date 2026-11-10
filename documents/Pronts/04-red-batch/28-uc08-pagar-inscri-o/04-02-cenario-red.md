@@ -1,3 +1,3 @@
-## Cenário selecionado
+## Scenario
 
-A chamada POST /inscricoes/:id/pagamentos deve delegar a decisão ao gateway e refletir aprovação/recusa. Sem gateway fake seguro definido, o cenário foi marcado como blocked e não exercitado.
+POST /inscricoes/:id/pagamentos delegates the decision to a gateway, then records approved or declined status. No gateway simulator contract is approved; the behavior was not exercised.

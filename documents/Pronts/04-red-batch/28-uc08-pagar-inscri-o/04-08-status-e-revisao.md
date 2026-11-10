@@ -1,5 +1,5 @@
 ## Status
 
-- Issue #28: OPEN; etapa In Progress, com cenário **blocked** por dependência de contrato seguro de gateway.
-- PR #90: OPEN/Draft; revisão pendente; nenhuma solicitação de review feita.
-- Não implementado, sem GREEN/merge/fechamento.
+- Issue #28: OPEN; workflow In Progress; test status **blocked** pending a safe gateway simulator.
+- PR #90: OPEN and Draft; review pending (no review requested or claimed).
+- No production implementation, GREEN, merge, or issue closure.

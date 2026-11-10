@@ -23,6 +23,6 @@ after(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-test('UC08 payment endpoint exposes approved and declined gateway outcomes', {
-  skip: 'Blocked: the endpoint flow needs a gateway fixture contract and inscription setup; neither may be fabricated or sent to a real gateway.',
+test('UC08 payment endpoint returns results for explicitly configured local gateway scenarios', {
+  skip: 'Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. Approval/decline responses and inscription setup cannot be exercised without changing production; no result may be supplied by a request or sent to a live gateway.',
 }, async () => {});

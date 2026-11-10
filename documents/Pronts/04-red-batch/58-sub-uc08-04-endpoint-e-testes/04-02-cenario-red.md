@@ -1,5 +1,7 @@
-## Cenario selecionado
+## Cenário proposto
 
-Endpoint processa pagamento e cobre resposta coerente para sucesso e falha.
+Preparar inscrição válida e executar o endpoint com respostas de aprovação e recusa explicitamente configuradas no fake local, verificando responses e estados.
 
-Blocked: the endpoint flow needs a gateway fixture contract and inscription setup; neither may be fabricated or sent to a real gateway.
+O fake deve existir somente em testes; nenhum resultado vem do request e nenhum gateway externo é chamado.
+
+**Resultado atual:** bloqueado. Endpoint/provider e fixture necessários não existem; o fluxo não foi executado.

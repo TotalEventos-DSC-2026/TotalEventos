@@ -1,5 +1,7 @@
-## REST/payment contract — team review pending
+## Contrato de endpoint/pagamento proposto — pendente de validação da equipe
 
-POST /inscricoes/:id/pagamentos, no client-controlled outcome; gateway approved → 201, declined → 402. Inscription setup uses proposed POST /eventos then POST /eventos/:id/inscricoes with {participanteId, sessaoId}; payment fixture contract is pending.
-
-Gateway abstraction/status semantics are proposals only. No user-controlled outcome field is sent. No production code changed.
+- `POST /inscricoes/:id/pagamentos`, sem resultado controlado pelo cliente.
+- Fake gateway somente em testes, com aprovação/recusa configuradas explicitamente por cenário.
+- Aprovado → HTTP 201 e recusado → HTTP 402 são respostas propostas, ainda não aprovadas.
+- Setup proposto de inscrição e campos de resposta ainda precisam de validação; não reutilizar como fixture real.
+- O endpoint/provider não existe em `AppModule`; execução permanece bloqueada.

@@ -1,5 +1,7 @@
-## Cenario selecionado
+## Cenário proposto
 
-Definir os status de pagamento e abstrair o gateway sem expor a decisao ao cliente.
+Mapear resposta explícita e local do gateway para o estado de pagamento correspondente, sem permitir que o cliente controle o resultado.
 
-Blocked: the codebase has no payment-gateway port or approved deterministic test-double contract. Do not invent a simulated approval/decline.
+Estados propostos: `PENDENTE`, `APROVADO`, `RECUSADO`, `FALHA` (pendentes de validação).
+
+**Resultado atual:** bloqueado. `AppModule` não possui endpoint/provider de pagamento para injeção do fake; comportamento de domínio não foi exercitado.

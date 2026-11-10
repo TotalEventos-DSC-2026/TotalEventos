@@ -23,6 +23,6 @@ after(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-test('UC08 gateway and payment status contract needs a safe test double', {
-  skip: 'Blocked: the codebase has no payment-gateway port or approved deterministic test-double contract. Do not invent a simulated approval/decline.',
+test('UC08 maps explicit local gateway responses to payment statuses', {
+  skip: 'Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. A fake response must be configured explicitly per scenario, never supplied by a request or sent to a live gateway.',
 }, async () => {});

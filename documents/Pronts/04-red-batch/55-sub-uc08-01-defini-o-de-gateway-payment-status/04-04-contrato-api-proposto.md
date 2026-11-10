@@ -1,5 +1,7 @@
-## REST/payment contract — team review pending
+## Contrato de pagamento proposto — pendente de validação da equipe
 
-POST /inscricoes/:id/pagamentos; no client-controlled outcome (empty body or no body, pending team decision); gateway port returns PENDENTE/APROVADO/RECUSADO/FALHA; approved → 201, declined → 402.
-
-Gateway abstraction/status semantics are proposals only. No user-controlled outcome field is sent. No production code changed.
+- `POST /inscricoes/:id/pagamentos`, sem resultado controlado pelo cliente (corpo vazio/ausente ainda depende da equipe).
+- Estados propostos: `PENDENTE`, `APROVADO`, `RECUSADO`, `FALHA`.
+- Testes futuros podem injetar fake local e configurar explicitamente cada resposta.
+- Aprovado → HTTP 201 e recusado → HTTP 402 são propostas, não contrato aprovado.
+- Atualmente não há endpoint nem gateway port no `AppModule`; execução permanece bloqueada.

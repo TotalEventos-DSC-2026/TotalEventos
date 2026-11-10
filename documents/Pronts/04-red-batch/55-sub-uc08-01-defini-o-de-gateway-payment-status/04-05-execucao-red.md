@@ -1,11 +1,13 @@
-## Build and test run
+## Execução do build e teste
 
-npm run build: succeeded.
+- `npm run build`: passou.
+- `node --test dist/test/uc08-payment-red.test.js`: exit code 0; um cenário skipped/blocked, sem asserção RED.
+- Nenhum request de pagamento foi enviado; não houve fake result nem chamada a gateway real.
 
-Command: node --test dist/test/uc08-payment-red.test.js; exit code 0. Exact test-runner output:
+Saída exata do test runner:
 
-````text
-﹣ UC08 gateway and payment status contract needs a safe test double (661.4088ms) # Blocked: the codebase has no payment-gateway port or approved deterministic test-double contract. Do not invent a simulated approval/decline.
+```text
+﹣ UC08 maps explicit local gateway responses to payment statuses (629.7565ms) # Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. A fake response must be configured explicitly per scenario, never supplied by a request or sent to a live gateway.
 ℹ tests 1
 ℹ suites 0
 ℹ pass 0
@@ -13,7 +15,7 @@ Command: node --test dist/test/uc08-payment-red.test.js; exit code 0. Exact test
 ℹ cancelled 0
 ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 2461.2374
-````
+ℹ duration_ms 2162.0706
+```
 
-Interpretation: Blocked: the codebase has no payment-gateway port or approved deterministic test-double contract. Do not invent a simulated approval/decline.
+O build valida TypeScript; a execução não atingiu comportamento de gateway/status, pois falta seam no sistema.

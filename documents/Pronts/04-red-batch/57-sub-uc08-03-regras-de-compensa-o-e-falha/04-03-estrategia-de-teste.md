@@ -1,3 +1,7 @@
-## Estrategia
+## Estratégia
 
-node:test TypeScript em test/uc08-payment-red.test.ts; AppModule NestJS e SQLite temporario .red-test-57, removido no hook after. O teste especifico fica skipped enquanto nao houver simulador aprovado; sem gateway externo.
+O teste TypeScript `node:test` inicializa `AppModule` e SQLite temporário em `.red-test-57`, removido pelo hook `after`.
+
+Proposta pendente de validação: fake apenas em testes; configurar explicitamente recusa e falha por cenário; nunca aceitar resultado do cliente nem chamar gateway real.
+
+O teste está explicitamente skipped porque não existe endpoint/provider de gateway injetável no `AppModule`. Não fabricar compensação ou liberação de vaga em teste independente do fluxo de produção.

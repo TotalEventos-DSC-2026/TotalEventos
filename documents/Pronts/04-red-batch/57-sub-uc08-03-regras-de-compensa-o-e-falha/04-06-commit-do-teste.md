@@ -1,5 +1,6 @@
-## Test commit
+## Commit do teste e evidências
 
-- Hash: 6d36cf0d7083dabaad00dafadf5246e10ccab235.
-- File: test/uc08-payment-red.test.ts; skipped/blocked scenario; no production files.
-- Co-authored-by trailer included.
+- SHA do commit de atualização do teste/artefatos será registrado após o commit.
+- Arquivos do issue: `test/uc08-payment-red.test.ts` e `documents/Pronts/04-red-batch/57-sub-uc08-03-regras-de-compensa-o-e-falha/`.
+- Nenhum código de produção alterado.
+- Mensagem do commit inclui `Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>`.

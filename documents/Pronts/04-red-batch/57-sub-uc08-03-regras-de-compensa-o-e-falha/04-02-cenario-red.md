@@ -1,5 +1,7 @@
-## Cenario selecionado
+## Cenário proposto
 
-Falha/recusa nao pode confirmar a inscricao; compensacao deve ser rastreavel e liberar reserva indevida.
+Configurar explicitamente no fake local uma recusa ou falha de processamento e validar que a inscrição não seja confirmada, a vaga fique consistente e a compensação seja rastreável.
 
-Blocked: a deterministic decline/failure and compensation contract requires an approved gateway test double.
+Sem resultado controlado pelo cliente e sem chamadas ao gateway real.
+
+**Resultado atual:** bloqueado; falta endpoint/provider injetável no `AppModule`, portanto nenhuma regra de falha/compensação foi executada.

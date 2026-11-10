@@ -23,6 +23,6 @@ after(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-test('UC08 declined or failed payment leaves inscription and capacity consistent', {
-  skip: 'Blocked: a deterministic decline/failure and compensation contract requires an approved gateway test double.',
+test('UC08 explicit local decline or failure keeps inscription and capacity consistent', {
+  skip: 'Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. A decline/failure response must be configured explicitly per scenario, never supplied by a request or sent to a live gateway.',
 }, async () => {});

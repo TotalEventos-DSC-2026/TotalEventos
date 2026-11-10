@@ -1,5 +1,6 @@
-## Status
+## Estado
 
-- Issue #57: OPEN; workflow In Progress; test status **blocked**.
-- PR #61: OPEN/Draft; review pending; no review requested or claimed.
-- No GREEN, merge, or issue closure.
+- Issue #57: OPEN; workflow In Progress (preservado); teste focado **blocked** por ausência de endpoint/provider.
+- PR #61: OPEN/Draft; review pending (não solicitado nem declarado).
+- Fake local somente em testes, respostas explícitas por cenário: proposta pendente de validação da equipe.
+- Sem alterações de produção, GREEN, merge, fechamento da issue ou chamadas externas.

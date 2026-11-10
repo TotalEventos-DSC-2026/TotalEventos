@@ -23,6 +23,6 @@ after(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-test('UC08 payment outcome cannot be tested until a safe gateway simulator contract is approved', {
-  skip: 'Blocked: no gateway abstraction or approved test-double contract; never accept outcome from request input.',
+test('UC08 confirms a paid inscription only after the configured local test gateway approves', {
+  skip: 'Blocked: AppModule has no payment endpoint or gateway provider to inject a test-only fake into. A fake response must be configured explicitly per scenario, never supplied by a request or sent to a live gateway.',
 }, async () => {});

@@ -1,3 +1,7 @@
-## RED scope — Issue #28
+## Escopo RED — Issue #28
 
-Selected criterion: confirm a paid inscription only after gateway approval. **Blocked** until the team approves a safe deterministic gateway test-double contract.
+Critério selecionado: confirmar inscrição paga somente depois da aprovação do pagamento.
+
+O usuário definiu que o gateway falso pode existir somente nos testes, com resposta configurada explicitamente para cada cenário. A proposta permanece pendente de validação da equipe.
+
+**Bloqueado:** o `AppModule` não possui endpoint de pagamento nem provider de gateway que permita injetar esse fake sem alterar produção. Não afirmar resultado RED até existir esse seam.

@@ -1,11 +1,9 @@
 ﻿# 04-05 — RED test execution
 
-Build: 
-pm run build — passed, exit 0. Test command: 
-ode --test --test-reporter=spec dist/test/red-issue-24.test.js — failed as expected at the missing route (404 instead of 201). The deeper rule was not reached.
+Build: npm run build — passed, exit 0. Test command: node --test --test-reporter=spec dist/test/red-issue-24.test.js — failed as expected at the missing route (404 instead of 201). The deeper rule was not reached.
 
 Exact test output:
-``text
+```text
 ✖ inscrição válida é aceita com status 201 (612.8846ms)
 ℹ tests 1
 ℹ suites 0
@@ -35,4 +33,4 @@ test at dist\test\red-issue-24.test.js:28:22
     operator: 'strictEqual',
     diff: 'simple'
   }
-``
+```

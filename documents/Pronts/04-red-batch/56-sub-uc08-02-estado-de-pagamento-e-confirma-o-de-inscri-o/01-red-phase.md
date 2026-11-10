@@ -6,5 +6,6 @@
 - Test file: `test/uc08-payment-red.test.ts`; build succeeded; test is skipped/blocked, not a RED failure.
 - User decision: propose a fake gateway only in tests, with an explicit configured response per scenario; pending team validation.
 - Blocker: no payment endpoint/provider exists in `AppModule` for injection. No simulated or external payment result was used.
+- Evidence commit: `41ec284fc2aa3ee97a0ba7897e8392d207c210fc`, pushed; PR #62 description updated.
 - Status In Progress; review pending; no production changes/GREEN/merge/closure.
 - Proposed contract pending review: `04-04-contrato-api-proposto.md`.

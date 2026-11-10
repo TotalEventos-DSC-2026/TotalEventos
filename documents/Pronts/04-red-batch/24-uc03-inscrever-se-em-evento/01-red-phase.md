@@ -1,13 +1,14 @@
-# RED Phase - Issue #24
+﻿# RED Phase - Issue #24
 
 ## Issue
-- T?tulo: [UC03] Inscrever-se em Evento
+- Title: [UC03] Inscrever-se em Evento
 - URL: https://github.com/TotalEventos-DSC-2026/TotalEventos/issues/24
 
-## Objetivo
-Registrar a fase RED do TDD para a issue selecionada, sem implementar a solu??o em produ??o.
+## Objective and status
+Record a valid enrollment scenario without production code. GitHub Project status: **In Progress**. The Draft PR remains open; review is pending and no review was requested or claimed.
 
-## Status
+## Branch and pull request
 - Branch: `feature/24-uc03-inscrever-se-em-evento-red`
-- Draft PR: a ser criado ap?s o commit inicial
-- GitHub Project: `In Progress`
+- Draft PR: https://github.com/TotalEventos-DSC-2026/TotalEventos/pull/94
+- Test commit: `e7a0b1f6bd71fd939ef7c45d79662b2078837908`
+- RED result: build passed; test fails early because the enrollment route returns 404 instead of 201. The deeper capacity rule was not reached.

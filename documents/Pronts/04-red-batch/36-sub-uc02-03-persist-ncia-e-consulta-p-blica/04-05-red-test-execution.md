@@ -1,12 +1,10 @@
 ﻿# 04-05 — RED test execution
 
-Build: 
-pm run build — passed (exit 0).
-Test: 
-ode --test --test-reporter=spec dist/test/red-issue-36.test.js — failed at the HTTP status assertion, receiving 404. This is an early missing-route dependency failure; the deeper issue rule was not reached.
+Build: npm run build — passed (exit 0).
+Test: node --test --test-reporter=spec dist/test/red-issue-36.test.js — failed at the HTTP status assertion, receiving 404. This is an early missing-route dependency failure; the deeper issue rule was not reached.
 
 Exact test output:
-``text
+```text
 ✖ consulta pública não inclui evento em rascunho (742.2486ms)
 ℹ tests 1
 ℹ suites 0
@@ -36,4 +34,4 @@ test at dist\test\red-issue-36.test.js:28:22
     operator: 'strictEqual',
     diff: 'simple'
   }
-``
+```

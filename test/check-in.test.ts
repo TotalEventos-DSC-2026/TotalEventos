@@ -142,6 +142,37 @@ test('inscrição não confirmada não realiza check-in nem persiste alteração
   assert.equal(inscricao.getStatus(), InscricaoStatus.PENDENTE);
 });
 
+test('inscrição cancelada deve rejeitar explicitamente o check-in com motivo de cancelamento', async () => {
+  const inscricao = new Inscricao(
+    'insc-cancelada',
+    'part-1',
+    'sessao-1',
+    InscricaoStatus.CANCELADA,
+    new Date(),
+    new Date(),
+  );
+  let saveCalls = 0;
+  const repository: InscricoesRepository = {
+    async findById() {
+      return inscricao;
+    },
+    async save(value) {
+      saveCalls += 1;
+      return value;
+    },
+  };
+
+  await assert.rejects(
+    new InscricoesService(repository).realizarCheckIn('insc-cancelada'),
+    (error: unknown) => {
+      assert.ok(error instanceof Error);
+      assert.match(error.message, /cancelada/i);
+    },
+  );
+  assert.equal(saveCalls, 0);
+  assert.equal(inscricao.getStatus(), InscricaoStatus.CANCELADA);
+});
+
 test('inscrição ausente retorna erro de não encontrado', async () => {
   const repository: InscricoesRepository = {
     async findById() {

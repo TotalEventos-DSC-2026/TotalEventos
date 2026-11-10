@@ -1,13 +1,17 @@
-# RED Phase - Issue #23
+﻿# RED Phase - Issue #23
 
 ## Issue
-- T?tulo: [UC02] Publicar Evento
+- Title: [UC02] Publicar Evento
 - URL: https://github.com/TotalEventos-DSC-2026/TotalEventos/issues/23
 
-## Objetivo
-Registrar a fase RED do TDD para a issue selecionada, sem implementar a solu??o em produ??o.
+## Objective and status
+Record the RED phase for UC02 publication without production changes. Project status is **In Progress**. The Draft PR remains open; review is pending and no review was requested or claimed.
 
-## Status
+## Branch and pull request
 - Branch: `feature/23-uc02-publicar-evento-red`
-- Draft PR: a ser criado ap?s o commit inicial
-- GitHub Project: `In Progress`
+- Draft PR: https://github.com/TotalEventos-DSC-2026/TotalEventos/pull/95
+- Test commit: `ae996808e075c531309bf7f7860147ddc79d27ad`
+- Current RED result: build passes; the HTTP test fails early because `POST /eventos` returns 404 instead of 201. Publication/listing assertions were not reached.
+
+## Scope
+Only the RED integration test and these Material 04 evidence artifacts are included. No production implementation, merge, or issue closure.

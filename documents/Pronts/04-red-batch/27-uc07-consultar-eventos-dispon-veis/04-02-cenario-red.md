@@ -1,5 +1,5 @@
-## Cenário
+## Scenario
 
-Dado o AppModule iniciado com SQLite isolado, quando o cliente consulta GET /eventos/publicos, então recebe 200 e uma lista JSON pública.
+Given AppModule started with isolated SQLite, when the client requests GET /eventos/publicos, expect HTTP 200 and a JSON list.
 
-Resultado: 404 na rota ausente; a resposta alvo 200 não foi alcançada.
+Actual response: 404 at the missing route. The expected list behavior was not reached.

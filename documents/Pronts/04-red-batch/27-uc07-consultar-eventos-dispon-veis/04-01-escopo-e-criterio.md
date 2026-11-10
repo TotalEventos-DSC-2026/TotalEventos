@@ -1,3 +1,3 @@
-## Escopo RED — Issue #27
+## RED scope — Issue #27
 
-Critério selecionado: consulta pública retorna somente eventos relevantes. Cenário único: GET /eventos/publicos retorna HTTP 200 e uma lista JSON (lista vazia permitida). Esta etapa testa o contrato, não implementa produção.
+Selected criterion: public listing returns relevant visible events. Scenario: GET /eventos/publicos returns HTTP 200 and a JSON list (empty list is valid). No production implementation is included.

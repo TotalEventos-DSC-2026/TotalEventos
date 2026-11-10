@@ -1,13 +1,11 @@
-## Build e execução RED
+## Build and RED run
 
+npm run build: succeeded.
 
-pm run build: concluído com sucesso.
+Command: node --test dist/test/uc07-public-query-red.test.js; exit code 1. Exact test-runner output:
 
-Comando específico: 
-ode --test dist/test/uc07-public-query-red.test.js (exit code 1). Saída exata do test runner:
-
-``text
-✖ UC07 public event listing returns HTTP 200 with a JSON array (622.9808ms)
+```text
+✖ UC07 public event listing returns HTTP 200 with a JSON array (397.8312ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 0
@@ -15,12 +13,12 @@ ode --test dist/test/uc07-public-query-red.test.js (exit code 1). Saída exata d
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2343.8207
+ℹ duration_ms 1318.7311
 
 ✖ failing tests:
 
 test at dist\test\uc07-public-query-red.test.js:28:22
-✖ UC07 public event listing returns HTTP 200 with a JSON array (622.9808ms)
+✖ UC07 public event listing returns HTTP 200 with a JSON array (397.8312ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   
   404 !== 200
@@ -36,5 +34,6 @@ test at dist\test\uc07-public-query-red.test.js:28:22
     operator: 'strictEqual',
     diff: 'simple'
   }
-``n
-Interpretação: falha antecipada porque a rota proposta respondeu 404 em vez de 200; o conteúdo da lista não foi alcançado.
+```
+
+Interpretation: the proposed route returned 404 instead of 200; list-body behavior was not reached.

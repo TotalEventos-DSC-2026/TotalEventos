@@ -1,5 +1,3 @@
-## Estratégia
+## Test strategy
 
-Teste de integração 
-ode:test, TypeScript em 	est/uc07-public-query-red.test.ts, AppModule NestJS e arquivo SQLite temporário dentro do worktree (.red-test-27, removido pelo hook fter). Execução focada após 
-pm run build.
+TypeScript node:test integration test in test/uc07-public-query-red.test.ts, using Nest AppModule, an HTTP server on loopback, and a temporary SQLite file under the worktree (.red-test-27), removed in the after hook.

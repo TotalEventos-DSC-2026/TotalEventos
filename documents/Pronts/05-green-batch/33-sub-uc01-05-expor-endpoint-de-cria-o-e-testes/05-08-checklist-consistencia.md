@@ -12,7 +12,7 @@
 | Suíte completa sem regressão | Confirmado | `npm test`: 23 pass, 0 fail, 0 skipped. |
 | Análise preliminar de qualidade registrada | Confirmado | Débitos listados para Material 06. |
 | Diff inspecionado | Confirmado | `git diff --check` sem erros; commit de produção contém nove arquivos. |
-| Commit e branch publicados | Confirmado | Commit `f16165a`; push fast-forward observado. |
+| Commit e branch publicados | Confirmado | Código `f16165a` e documentação `3cdb7ff`; pushes fast-forward observados. |
 | PR atualizado e Draft | Confirmado | PR #85 verificado aberto, Draft, base `main`. |
 | Issues no Project sincronizadas | Confirmado | #29–33 abertas e em `In Progress` no projeto principal. |
 | Revisão técnica por par | Pendente | Nenhuma review confirmada. |

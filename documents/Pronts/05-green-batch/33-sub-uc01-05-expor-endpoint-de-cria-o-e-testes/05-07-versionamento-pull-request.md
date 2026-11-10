@@ -6,7 +6,7 @@
 - Mensagem: `feat(eventos): implement UC01 creation flow (refs #29-#33)`.
 - Arquivos: nove de produção — módulo/controller/DTO/entidade/serviço/repositório e wiring/schema SQLite.
 - Diff: 274 inserções e 1 remoção.
-- Testes #29–32 já incorporados na branch por commits previamente publicados; suas asserções não foram alteradas.
+- Testes #29–32 foram cherry-picked de suas branches publicadas para validar a sequência conjunta; suas asserções não foram alteradas.
 
 ## Push observado
 
@@ -16,6 +16,18 @@ To https://github.com/TotalEventos-DSC-2026/TotalEventos.git
 ```
 
 O push foi fast-forward, sem force. A branch remota mantém upstream no PR já existente.
+
+## Commit dos artefatos Material 05
+
+- Hash: `3cdb7ff51337c5dac457b3c3f649c5c2c8a79f6d`.
+- Mensagem: `docs(tdd): record GREEN evidence for UC01 issues 29-33`.
+- Oito arquivos Markdown; 361 inserções.
+- Push observado:
+
+```text
+To https://github.com/TotalEventos-DSC-2026/TotalEventos.git
+   f16165a..3cdb7ff  HEAD -> feature/33-sub-uc01-05-expor-endpoint-de-cria-o-e-testes-red
+```
 
 ## Draft PR
 

@@ -123,6 +123,10 @@ Registra a entrada usando o código QR de um ingresso emitido.
 }
 ```
 
+O campo `codigoQr` deve ser um texto não vazio. Corpos sem esse campo, com
+valor de outro tipo ou contendo apenas espaços são rejeitados com `400 Bad
+Request` antes de o serviço de aplicação ser chamado.
+
 **Resposta de sucesso (`201`):**
 
 ```json

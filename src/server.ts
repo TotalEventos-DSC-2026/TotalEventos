@@ -1,4 +1,5 @@
 import { createServer as createHttpServer } from 'node:http';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {
@@ -62,7 +63,12 @@ if (require.main === module) {
   const port = Number(process.env.PORT) || 3000;
 
   void NestFactory.create(AppModule)
-    .then((app) => app.listen(port))
+    .then((app) => {
+      app.useGlobalPipes(
+        new ValidationPipe({ whitelist: true, transform: true }),
+      );
+      return app.listen(port);
+    })
     .then(() => {
       console.log(`TotalEventos disponível em http://localhost:${port}`);
     })

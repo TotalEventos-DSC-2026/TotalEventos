@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { after, before, test } from 'node:test';
 import type { AddressInfo } from 'node:net';
 import { Test } from '@nestjs/testing';
-import type { INestApplication } from '@nestjs/common';
+import { ValidationPipe, type INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
 import { IngressoStatus } from '../src/common/enums/ingresso-status.enum';
 import { Ingresso } from '../src/modules/acessos/entities/ingresso.entity';
@@ -25,6 +25,7 @@ const getApp = (): INestApplication => {
 before(async () => {
   const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
   app = moduleRef.createNestApplication();
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   await app.listen(0, '127.0.0.1');
   const address = getApp().getHttpServer().address() as AddressInfo;
   baseUrl = `http://127.0.0.1:${address.port}`;
@@ -54,6 +55,18 @@ test('check-in HTTP persiste ingresso e lotação juntos e rejeita duplicidade',
   const session = await getApp().get<SessoesLotacaoRepository>(SESSOES_LOTACAO_REPOSITORY).findById('sess-e2e');
   assert.equal(ticket?.getStatus(), IngressoStatus.UTILIZADO);
   assert.equal(session?.getOcupacaoAtual(), 1);
+});
+
+test('check-in HTTP rejeita código QR vazio, não textual ou apenas espaços', async () => {
+  for (const codigoQr of ['', 123, '   ']) {
+    const response = await fetch(`${baseUrl}/acessos/check-in`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ codigoQr }),
+    });
+
+    assert.equal(response.status, 400);
+  }
 });
 
 test('inscrição inexistente retorna 404 pela rota HTTP', async () => {

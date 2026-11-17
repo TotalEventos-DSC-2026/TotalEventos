@@ -7,9 +7,13 @@ import type { AddressInfo } from 'node:net';
 import { Test } from '@nestjs/testing';
 import { ValidationPipe, type INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
+import { InscricaoStatus } from '../src/common/enums/inscricao-status.enum';
 import { IngressoStatus } from '../src/common/enums/ingresso-status.enum';
 import { Ingresso } from '../src/modules/acessos/entities/ingresso.entity';
 import { INGRESSOS_REPOSITORY, type IngressosRepository } from '../src/modules/acessos/repositories/ingressos.repository.interface';
+import { Inscricao } from '../src/modules/inscricoes/entities/inscricao.entity';
+import { INSCRICOES_REPOSITORY, type InscricoesRepository } from '../src/modules/inscricoes/repositories/inscricoes.repository.interface';
+import { SqliteInscricoesRepository } from '../src/modules/inscricoes/repositories/sqlite-inscricoes.repository';
 import { SESSOES_LOTACAO_REPOSITORY, type SessoesLotacaoRepository } from '../src/modules/lotacao/repositories/sessoes-lotacao.repository.interface';
 import { SessaoPalestra } from '../src/modules/lotacao/entities/sessao-palestra.entity';
 import { SESSOES_REPOSITORY, type SessoesRepository } from '../src/repositories/sessoes-repository';
@@ -93,4 +97,45 @@ test('check-in HTTP rejeita código QR vazio, não textual ou apenas espaços', 
 test('inscrição inexistente retorna 404 pela rota HTTP', async () => {
   const response = await fetch(`${baseUrl}/inscricoes/nao-existe/check-in`, { method: 'POST' });
   assert.equal(response.status, 404);
+});
+
+test('check-in HTTP atualiza inscrição no SQLite e rejeita duplicidade', async () => {
+  const repository = getApp().get<InscricoesRepository>(INSCRICOES_REPOSITORY);
+  assert.ok(repository instanceof SqliteInscricoesRepository);
+
+  await repository.save(new Inscricao(
+    'insc-e2e',
+    'part-e2e',
+    'sess-e2e',
+    InscricaoStatus.CONFIRMADA,
+    new Date(0),
+    new Date(0),
+  ));
+
+  const response = await fetch(`${baseUrl}/inscricoes/insc-e2e/check-in`, {
+    method: 'POST',
+  });
+  assert.equal(response.status, 201);
+  const body = await response.json() as {
+    inscricaoId: string;
+    status: string;
+    updatedAt: string;
+    message: string;
+  };
+  assert.equal(body.inscricaoId, 'insc-e2e');
+  assert.equal(body.status, InscricaoStatus.CHECK_IN_REALIZADO);
+  assert.ok(Number.isFinite(Date.parse(body.updatedAt)));
+  assert.equal(body.message, 'Check-in realizado com sucesso.');
+
+  const persistedInscricao = await repository.findById('insc-e2e');
+  assert.equal(persistedInscricao?.getStatus(), InscricaoStatus.CHECK_IN_REALIZADO);
+
+  const retry = await fetch(`${baseUrl}/inscricoes/insc-e2e/check-in`, {
+    method: 'POST',
+  });
+  assert.equal(retry.status, 409);
+  assert.equal(
+    (await repository.findById('insc-e2e'))?.getStatus(),
+    InscricaoStatus.CHECK_IN_REALIZADO,
+  );
 });

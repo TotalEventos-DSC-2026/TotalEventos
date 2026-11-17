@@ -1,16 +1,35 @@
-import { BadRequestException, Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Query,
+} from '@nestjs/common';
 import {
   isDataValida,
   isHorarioValido,
 } from '../../common/http';
+import {
+  SESSOES_REPOSITORY,
+  type SessoesRepository,
+} from '../../repositories/sessoes-repository';
 import { createConsultarGradeSessoes } from './consultar-grade-sessoes';
-import { createSessoesRepository } from '../../repositories/sessoes-repository';
 
 @Controller()
 export class GradeSessoesController {
-  private readonly consultarGradeSessoes = createConsultarGradeSessoes(
-    createSessoesRepository([]),
-  );
+  private readonly consultarGradeSessoes: ReturnType<
+    typeof createConsultarGradeSessoes
+  >;
+
+  constructor(
+    @Inject(SESSOES_REPOSITORY)
+    private readonly sessoesRepository: SessoesRepository,
+  ) {
+    this.consultarGradeSessoes = createConsultarGradeSessoes(
+      this.sessoesRepository,
+    );
+  }
 
   @Get('health')
   health() {

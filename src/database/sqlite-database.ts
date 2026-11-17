@@ -14,6 +14,19 @@ export class SqliteDatabase implements OnModuleDestroy {
     this.connection.pragma('journal_mode = WAL');
     this.connection.pragma('foreign_keys = ON');
     this.connection.exec(`
+      CREATE TABLE IF NOT EXISTS sessoes (
+        sessao_id TEXT PRIMARY KEY,
+        evento_id TEXT NOT NULL,
+        titulo TEXT NOT NULL,
+        data TEXT NOT NULL,
+        hora_inicio TEXT NOT NULL,
+        hora_fim TEXT NOT NULL,
+        sala TEXT NOT NULL,
+        publicada INTEGER NOT NULL CHECK(publicada IN (0, 1)),
+        ativa INTEGER NOT NULL CHECK(ativa IN (0, 1)),
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
       CREATE TABLE IF NOT EXISTS sessoes_lotacao (
         sessao_id TEXT PRIMARY KEY,
         capacidade_maxima INTEGER NOT NULL CHECK(capacidade_maxima >= 0),
@@ -38,6 +51,7 @@ export class SqliteDatabase implements OnModuleDestroy {
         updated_at TEXT NOT NULL
       );
       CREATE INDEX IF NOT EXISTS idx_ingressos_qr ON ingressos(codigo_qr);
+      CREATE INDEX IF NOT EXISTS idx_sessoes_evento ON sessoes(evento_id, data, hora_inicio);
     `);
   }
 

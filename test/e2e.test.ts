@@ -12,6 +12,7 @@ import { Ingresso } from '../src/modules/acessos/entities/ingresso.entity';
 import { INGRESSOS_REPOSITORY, type IngressosRepository } from '../src/modules/acessos/repositories/ingressos.repository.interface';
 import { SESSOES_LOTACAO_REPOSITORY, type SessoesLotacaoRepository } from '../src/modules/lotacao/repositories/sessoes-lotacao.repository.interface';
 import { SessaoPalestra } from '../src/modules/lotacao/entities/sessao-palestra.entity';
+import { SESSOES_REPOSITORY, type SessoesRepository } from '../src/repositories/sessoes-repository';
 
 const directory = mkdtempSync(join(tmpdir(), 'totaleventos-e2e-'));
 process.env.DATABASE_PATH = join(directory, 'test.sqlite');
@@ -31,6 +32,18 @@ before(async () => {
   baseUrl = `http://127.0.0.1:${address.port}`;
   const sessions = getApp().get<SessoesLotacaoRepository>(SESSOES_LOTACAO_REPOSITORY);
   const tickets = getApp().get<IngressosRepository>(INGRESSOS_REPOSITORY);
+  const sessoesRepository = getApp().get<SessoesRepository>(SESSOES_REPOSITORY);
+  await sessoesRepository.save({
+    id: 'sess-e2e-grade',
+    eventoId: 'evento-db',
+    titulo: 'Sessão SQLite',
+    data: '2026-10-20',
+    horaInicio: '09:00',
+    horaFim: '10:00',
+    sala: 'Auditório A',
+    publicada: true,
+    ativa: true,
+  });
   await sessions.save(new SessaoPalestra('sess-e2e', 1, 0, new Date(0)));
   await tickets.save(new Ingresso('ing-e2e', 'part-e2e', 'sess-e2e', IngressoStatus.EMITIDO, 'qr-e2e', new Date(0), new Date(0)));
 });
@@ -38,6 +51,14 @@ before(async () => {
 after(async () => {
   await app?.close();
   rmSync(directory, { recursive: true, force: true });
+});
+
+test('GET /eventos/:eventoId/sessoes consulta a grade diretamente no SQLite', async () => {
+  const response = await fetch(`${baseUrl}/eventos/evento-db/sessoes`);
+  assert.equal(response.status, 200);
+  const body = await response.json() as { eventoId: string; sessoes: Array<{ id: string }> };
+  assert.equal(body.eventoId, 'evento-db');
+  assert.equal(body.sessoes[0]?.id, 'sess-e2e-grade');
 });
 
 test('check-in HTTP persiste ingresso e lotação juntos e rejeita duplicidade', async () => {

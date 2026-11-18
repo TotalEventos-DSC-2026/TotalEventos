@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SqliteDatabase } from '../../database/sqlite-database';
 import {
+  createSessoesRepository,
   createSqliteSessoesRepository,
   SESSOES_REPOSITORY,
 } from '../../repositories/sessoes-repository';
@@ -11,8 +12,10 @@ import { GradeSessoesController } from './grade-sessoes.controller';
   providers: [
     {
       provide: SESSOES_REPOSITORY,
-      useFactory: (db: SqliteDatabase) => createSqliteSessoesRepository(db),
-      inject: [SqliteDatabase],
+      useFactory: process.env.PERSISTENCE === 'postgres'
+        ? () => createSessoesRepository([])
+        : (db: SqliteDatabase) => createSqliteSessoesRepository(db),
+      inject: process.env.PERSISTENCE === 'postgres' ? [] : [SqliteDatabase],
     },
   ],
 })

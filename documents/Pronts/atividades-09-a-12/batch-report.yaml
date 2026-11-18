@@ -1,0 +1,23 @@
+batch_id: atividades-09-a-12
+status: completed
+scope:
+  - persistencia-postgresql-typeorm
+  - containerizacao-docker-compose
+  - contrato-http
+  - auditoria-arquitetural
+tests:
+  command: npm test
+  passed: 23
+  failed: 0
+container:
+  build: pass
+  health_status: 200
+postgres:
+  migration: CreateCheckInTables1710000000000
+  durability_check: pass
+  duplicate_check: 409
+documentation:
+  material_09: 8 arquivos
+  material_10: 8 arquivos
+  material_11: 8 arquivos
+  material_12: 8 arquivos

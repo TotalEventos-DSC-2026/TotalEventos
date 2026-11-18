@@ -1,0 +1,27 @@
+batch_id: atividades-09-a-12
+status: completed
+traceability:
+  - material: 09
+    requirements:
+      - PostgreSQL real
+      - TypeORM
+      - migration
+      - mapper
+      - repository provider
+  - material: 10
+    requirements:
+      - Dockerfile
+      - dockerignore
+      - Compose
+      - migration history
+      - API durability
+  - material: 11
+    requirements:
+      - public HTTP DTO
+      - status semantics
+      - containerized contract
+  - material: 12
+    requirements:
+      - architecture reconstruction
+      - evidence-based audit
+      - regression verification

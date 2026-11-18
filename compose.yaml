@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: totaleventos-postgres
+    environment:
+      POSTGRES_DB: totaleventos
+      POSTGRES_USER: totaleventos
+      POSTGRES_PASSWORD: totaleventos
+    ports:
+      - "5432:5432"
+    volumes:
+      - totaleventos_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U totaleventos -d totaleventos"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres_test:
+    image: postgres:17
+    container_name: totaleventos-postgres-test
+    environment:
+      POSTGRES_DB: totaleventos_test
+      POSTGRES_USER: totaleventos
+      POSTGRES_PASSWORD: totaleventos
+    ports:
+      - "5435:5432"
+    volumes:
+      - totaleventos_postgres_test_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: totaleventos-api
+    environment:
+      PERSISTENCE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: totaleventos
+      DB_PASSWORD: totaleventos
+      DB_NAME: totaleventos
+      DB_MIGRATIONS_RUN: "true"
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  totaleventos_postgres_data:
+  totaleventos_postgres_test_data:

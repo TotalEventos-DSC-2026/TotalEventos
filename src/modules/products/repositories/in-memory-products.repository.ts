@@ -14,4 +14,9 @@ export class InMemoryProductsRepository implements ProductsRepository {
     const product = this.products.get(productId);
     return product?.isActive() ? product : null;
   }
+
+  async save(product: Product): Promise<Product> {
+    this.products.set(product.productId, product);
+    return product;
+  }
 }

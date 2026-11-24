@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:3000
+
+### Produto ativo conhecido → esperado: 200 OK
+# Não foi possível usar um seed real nesta etapa.
+PATCH {{baseUrl}}/products/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+Content-Type: application/json
+
+{
+  "name": "Produto alterado"
+}
+
+### Produto inexistente → esperado: 404 Not Found
+PATCH {{baseUrl}}/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13
+Content-Type: application/json
+
+{
+  "name": "Novo nome"
+}
+
+### UUID inválido → esperado: 400 Bad Request
+PATCH {{baseUrl}}/products/abc
+Content-Type: application/json
+
+{
+  "name": "Novo nome"
+}
+
+### Nome vazio → esperado: 400 Bad Request
+PATCH {{baseUrl}}/products/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+Content-Type: application/json
+
+{
+  "name": "   "
+}

@@ -87,6 +87,8 @@ check "check-in código inexistente" "404" "$(post_status '{"codigoQr":"codigo-i
 
 check "produto UUID inválido" "400" "$(status "$BASE/products/abc" || true)"
 check "produto inexistente" "404" "$(status "$BASE/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13" || true)"
+check "alteração UUID inválido" "400" "$(curl --silent --show-error --max-time 3 --output /dev/null --write-out '%{http_code}' -H 'Content-Type: application/json' -d '{"name":"Novo nome"}' -X PATCH "$BASE/products/abc" || true)"
+check "alteração produto inexistente" "404" "$(curl --silent --show-error --max-time 3 --output /dev/null --write-out '%{http_code}' -H 'Content-Type: application/json' -d '{"name":"Novo nome"}' -X PATCH "$BASE/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13" || true)"
 
 if [ "$DURABILITY" -eq 1 ]; then
   if [ "$api_state" = "running" ]; then

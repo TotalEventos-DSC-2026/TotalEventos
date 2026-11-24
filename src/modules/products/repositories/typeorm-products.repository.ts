@@ -21,4 +21,12 @@ export class TypeOrmProductsRepository implements ProductsRepository {
     });
     return row ? ProductMapper.toDomain(row) : null;
   }
+
+  async save(product: Product): Promise<Product> {
+    await this.repository.update(
+      { productId: product.productId, deletedAt: IsNull() },
+      { name: product.name },
+    );
+    return product;
+  }
 }

@@ -18,4 +18,13 @@ export class SqliteProductsRepository implements ProductsRepository {
       ? new Product(row.product_id, row.name, null)
       : null;
   }
+
+  async save(product: Product): Promise<Product> {
+    this.db.connection.prepare(`
+      UPDATE products
+      SET name = ?, deleted_at = deleted_at
+      WHERE product_id = ? AND deleted_at IS NULL
+    `).run(product.name, product.productId);
+    return product;
+  }
 }

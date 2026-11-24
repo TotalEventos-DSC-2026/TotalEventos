@@ -9,6 +9,7 @@ import { Product } from '../src/modules/products/entities/product.entity';
 import { InMemoryProductsRepository } from '../src/modules/products/repositories/in-memory-products.repository';
 import { ProductsService } from '../src/modules/products/services/products.service';
 import { ProductLookupFailedException } from '../src/common/exceptions/product-lookup-failed.exception';
+import { ProductUpdateFailedException } from '../src/common/exceptions/product-update-failed.exception';
 import { ProductNotFoundException } from '../src/common/exceptions/product-not-found.exception';
 
 const activeId = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11';
@@ -100,11 +101,86 @@ test('ProductsService diferencia ausência de falha de persistência', async () 
     async findActiveById(): Promise<null> {
       throw new Error('detalhe interno do banco');
     },
+    async save(product: Product): Promise<Product> {
+      return product;
+    },
   });
   await assert.rejects(
     failingService.getProductById(activeId),
     (error: unknown) =>
       error instanceof ProductLookupFailedException &&
       error.message === 'Falha ao consultar o produto.',
+  );
+});
+
+test('PATCH /products/:productId altera name de produto ativo', async () => {
+  const response = await fetch(`${baseUrl}/products/${activeId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Produto alterado' }),
+  });
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    productId: activeId,
+    name: 'Produto alterado',
+  });
+});
+
+test('PATCH /products/:productId retorna 404 para produto inexistente', async () => {
+  const response = await fetch(`${baseUrl}/products/${missingId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Novo nome' }),
+  });
+
+  assert.equal(response.status, 404);
+});
+
+test('PATCH /products/:productId rejeita nome vazio', async () => {
+  const response = await fetch(`${baseUrl}/products/${activeId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: '   ' }),
+  });
+
+  assert.equal(response.status, 400);
+});
+
+test('PATCH /products/:productId rejeita UUID inválido', async () => {
+  const response = await fetch(`${baseUrl}/products/abc`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Novo nome' }),
+  });
+
+  assert.equal(response.status, 400);
+});
+
+test('PATCH /products/:productId trata produto removido como inexistente', async () => {
+  const response = await fetch(`${baseUrl}/products/${removedId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'Novo nome' }),
+  });
+
+  assert.equal(response.status, 404);
+});
+
+test('ProductsService traduz falha de persistência da alteração', async () => {
+  const failingService = new ProductsService({
+    async findActiveById(productId: string) {
+      return new Product(productId, 'Produto ativo');
+    },
+    async save(): Promise<Product> {
+      throw new Error('detalhe interno do banco');
+    },
+  });
+
+  await assert.rejects(
+    failingService.updateProductById(activeId, 'Novo nome'),
+    (error: unknown) =>
+      error instanceof ProductUpdateFailedException &&
+      error.message === 'Falha ao alterar o produto.',
   );
 });

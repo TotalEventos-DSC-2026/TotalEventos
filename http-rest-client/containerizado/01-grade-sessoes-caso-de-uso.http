@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:3000
+
+### Cenário 1: grade sem filtros → esperado: 200 OK
+GET {{baseUrl}}/eventos/evt-demo/sessoes
+
+### Cenário 2: filtro válido por data → esperado: 200 OK
+GET {{baseUrl}}/eventos/evt-demo/sessoes?data=2026-11-24
+
+### Cenário 3: data inválida → esperado: 400 Bad Request
+GET {{baseUrl}}/eventos/evt-demo/sessoes?data=24-11-2026
+
+### Cenário 4: horário inválido → esperado: 400 Bad Request
+GET {{baseUrl}}/eventos/evt-demo/sessoes?horario=25:00
+
+### Cenário 5: sala vazia → esperado: 400 Bad Request
+GET {{baseUrl}}/eventos/evt-demo/sessoes?sala=%20

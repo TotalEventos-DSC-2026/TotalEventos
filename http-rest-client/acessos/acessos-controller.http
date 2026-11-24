@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:3000
+
+### Corpo ausente no check-in → esperado: 400 Bad Request
+POST {{baseUrl}}/acessos/check-in
+Content-Type: application/json
+
+{}
+
+### Código QR vazio → esperado: 400 Bad Request
+POST {{baseUrl}}/acessos/check-in
+Content-Type: application/json
+
+{
+  "codigoQr": ""
+}
+
+### Código QR inexistente → esperado: 404 Not Found
+POST {{baseUrl}}/acessos/check-in
+Content-Type: application/json
+
+{
+  "codigoQr": "codigo-inexistente"
+}

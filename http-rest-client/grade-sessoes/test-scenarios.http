@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000
+
+### Evento sem sessões cadastradas → esperado: 200 OK
+GET {{baseUrl}}/eventos/evento-sem-sessoes/sessoes
+
+### Filtro de data válido sem correspondência → esperado: 200 OK
+GET {{baseUrl}}/eventos/evt-demo/sessoes?data=2026-12-31
+
+### Filtro de sala sem correspondência → esperado: 200 OK
+GET {{baseUrl}}/eventos/evt-demo/sessoes?sala=Sala-X

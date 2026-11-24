@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3000
+
+### Saúde do serviço em Docker → esperado: 200 OK
+GET {{baseUrl}}/health
+
+### Rota inexistente em Docker → esperado: 404 Not Found
+GET {{baseUrl}}/rota-inexistente

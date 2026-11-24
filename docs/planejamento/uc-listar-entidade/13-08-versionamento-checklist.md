@@ -13,7 +13,7 @@ Branch criada para a atividade:
 - [x] Arquivos de `http-rest-client/` revisados.
 - [x] Nenhum segredo ou `.env` no diff.
 - [x] `run-checks.sh` com modo executável confirmado como `100755`.
-- [ ] Execuções reais registradas.
+- [x] Execuções reais registradas.
 - [ ] Pull Request criado. Não foi possível criar: `gh` não está instalado.
 - [ ] Revisão humana concluída.
 - [ ] Merge realizado somente após aprovação.

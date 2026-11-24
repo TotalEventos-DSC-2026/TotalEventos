@@ -21,6 +21,9 @@ Em 24/11/2026:
 - Docker Desktop não estava acessível pelo daemon, então Docker Compose e durabilidade não foram confirmados.
 - Execução local do script: `11 ok, 0 falha(s)`, código de saída `0`.
 - Execução com `BASE_URL=http://localhost:9`: `0 ok, 11 falha(s)`, código de saída `1`.
+- ShellCheck não estava instalado no ambiente.
+- Docker Compose não pôde ser executado porque o daemon do Docker não ficou acessível.
+- O modo executável foi registrado no Git como `100755`.
 
 Comandos previstos:
 

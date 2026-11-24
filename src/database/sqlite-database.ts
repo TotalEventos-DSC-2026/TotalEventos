@@ -50,6 +50,11 @@ export class SqliteDatabase implements OnModuleDestroy {
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS products (
+        product_id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        deleted_at TEXT
+      );
       CREATE INDEX IF NOT EXISTS idx_ingressos_qr ON ingressos(codigo_qr);
       CREATE INDEX IF NOT EXISTS idx_sessoes_evento ON sessoes(evento_id, data, hora_inicio);
     `);

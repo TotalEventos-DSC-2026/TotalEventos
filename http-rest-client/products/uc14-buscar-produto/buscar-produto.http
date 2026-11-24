@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:3000
+
+### Produto ativo conhecido → esperado: 200 OK
+# Não foi possível executar nesta etapa sem seed real de produtos.
+GET {{baseUrl}}/products/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+
+### Produto inexistente → esperado: 404 Not Found
+GET {{baseUrl}}/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13
+
+### Produto removido conhecido → esperado: 404 Not Found
+# Não foi possível executar nesta etapa sem seed real de produtos removidos.
+GET {{baseUrl}}/products/b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12
+
+### Identificador inválido → esperado: 400 Bad Request
+GET {{baseUrl}}/products/abc

@@ -85,6 +85,9 @@ check "check-in sem código QR" "400" "$(post_status '{}' "$BASE/acessos/check-i
 check "check-in código vazio" "400" "$(post_status '{"codigoQr":""}' "$BASE/acessos/check-in" || true)"
 check "check-in código inexistente" "404" "$(post_status '{"codigoQr":"codigo-inexistente"}' "$BASE/acessos/check-in" || true)"
 
+check "produto UUID inválido" "400" "$(status "$BASE/products/abc" || true)"
+check "produto inexistente" "404" "$(status "$BASE/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13" || true)"
+
 if [ "$DURABILITY" -eq 1 ]; then
   if [ "$api_state" = "running" ]; then
     docker compose restart api >/dev/null 2>&1 || true

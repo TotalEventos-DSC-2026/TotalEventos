@@ -24,6 +24,7 @@ A API deve estar em execução e o serviço `postgres` deve estar saudável.
 | `00-smoke.http` | Smoke test do ambiente Docker |
 | `01-grade-sessoes-caso-de-uso.http` | Cenários principais da UC07 |
 | `02-acessos-fronteira.http` | Cenários de apoio que não dependem de seed |
+| `04-products-buscar-produto.http` | Fronteiras de busca de produto por UUID |
 | `run-checks.sh` | Verificação automatizada com código de saída |
 
 ## Verificacao automatizada

@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { IngressoOrmEntity } from '../modules/acessos/entities/ingresso.orm.entity';
 import { InscricaoOrmEntity } from '../modules/inscricoes/entities/inscricao.orm.entity';
 import { SessaoLotacaoOrmEntity } from '../modules/lotacao/entities/sessao-lotacao.orm.entity';
+import { ProductOrmEntity } from '../modules/products/entities/product.orm.entity';
 
 export function createAppDataSource(): DataSource {
   return new DataSource({
@@ -15,6 +16,6 @@ export function createAppDataSource(): DataSource {
     synchronize: false,
     migrationsRun: process.env.DB_MIGRATIONS_RUN !== 'false',
     migrations: [__dirname + '/migrations/*.js'],
-    entities: [IngressoOrmEntity, InscricaoOrmEntity, SessaoLotacaoOrmEntity],
+    entities: [IngressoOrmEntity, InscricaoOrmEntity, SessaoLotacaoOrmEntity, ProductOrmEntity],
   });
 }

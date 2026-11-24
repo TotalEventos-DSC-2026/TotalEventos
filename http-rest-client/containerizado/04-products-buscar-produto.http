@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:3000
+
+### Produto inexistente no container → esperado: 404 Not Found
+GET {{baseUrl}}/products/c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13
+
+### Identificador inválido no container → esperado: 400 Bad Request
+GET {{baseUrl}}/products/abc

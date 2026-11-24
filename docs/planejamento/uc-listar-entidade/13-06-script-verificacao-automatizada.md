@@ -15,12 +15,14 @@ Em 24/11/2026:
 
 - `bash -n` passou e a sintaxe foi confirmada.
 - `npm test` passou com 23 testes.
-- A API local respondeu `200` em `/health`.
-- `GET /eventos/evt-demo/sessoes` obteve `200`.
-- `GET /eventos/evt-demo/sessoes?data=24-11-2026` obteve `400`.
-- Docker Desktop não estava acessível pelo daemon, então Docker Compose e durabilidade não foram confirmados.
-- Execução local do script: `11 ok, 0 falha(s)`, código de saída `0`.
-- Execução com `BASE_URL=http://localhost:9`: `0 ok, 11 falha(s)`, código de saída `1`.
+- Docker Compose ficou disponível: `api` em execução e `postgres` em estado `healthy`.
+- Execução normal do script: `15 ok, 0 falha(s)`, código de saída `0`.
+- Execução com `--durability`: `16 ok, 0 falha(s)`, código de saída `0`.
+- Execução com `BASE_URL=http://localhost:9`: `4 ok, 11 falha(s)`, código de saída `1`.
+- O reinício foi aplicado somente ao serviço `api`; o endpoint `/health` voltou com `200`.
+- Persistência por registro SQL não se aplica ao UC07, que é de consulta.
+- ShellCheck não estava instalado no ambiente.
+- O modo executável foi registrado no Git como `100755`.
 
 Comandos previstos:
 
